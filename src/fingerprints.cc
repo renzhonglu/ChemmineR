@@ -74,7 +74,11 @@ RcppExport SEXP similarity(SEXP queryS, SEXP targetsS,SEXP typeS,SEXP addoneS,SE
 				Rf_error("unknown similarity type");
 		}
 
+<<<<<<< HEAD
 		delete [] counts;
+=======
+        delete [] counts;
+>>>>>>> c75ff524360d34301123ca2757e50d44b054d59d
 	}
 	
 	return result;
