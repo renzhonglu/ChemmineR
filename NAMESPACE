@@ -95,6 +95,8 @@ export(
 
 
     ## Chemmine Tools
-    "status","browseJob","result","listCMTools","toolDetails","launchCMTool"
+    "status","browseJob","result","listCMTools","toolDetails","launchCMTool",
+
+	 "genParameters"
 )
 
