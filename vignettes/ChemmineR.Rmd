@@ -300,7 +300,7 @@ sdfset=read.SDFset("mycompound.sdf")
 
 
 `propOB`: generates several compound properties. See the man page for a current list of properties computed.
-```{r eval=TRUE, tidy=FALSE}
+```{r eval=FALSE, tidy=FALSE}
 propOB(sdfset[1])
 ```
 
@@ -900,7 +900,7 @@ when searching with them. Finally, the new compound ids are returned and
 stored in the "ids" variable.
 
 
-```{r eval=TRUE, tidy=FALSE}
+```{r eval=FALSE, tidy=FALSE}
  data(sdfsample)
 
  #create and initialize a new SQLite database 
