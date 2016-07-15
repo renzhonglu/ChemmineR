@@ -12,7 +12,7 @@ biocViews: Cheminformatics, BiomedicalInformatics, Pharmacogenetics,
         Pharmacogenomics, MicrotitrePlateAssay, CellBasedAssays, Visualization,
         Infrastructure, DataImport, Clustering, Proteomics
 Imports: rjson, graphics, stats, RCurl, DBI, digest, BiocGenerics, Rcpp (>= 0.11.0), ggplot2
-Suggests: RSQLite, scatterplot3d, gplots, fmcsR, snow, RPostgreSQL, BiocStyle, knitr, knitcitations, knitrBootstrap, ChemmineOB (>= 1.3.8), ChemmineDrugs, grid, gridExtra, png
+Suggests: RSQLite, scatterplot3d, gplots, fmcsR, snow, RPostgreSQL, BiocStyle, knitr, knitcitations, knitrBootstrap, ChemmineOB (>= 1.3.8), ChemmineDrugs, grid, gridExtra, png,rmarkdown
 Enhances: ChemmineOB
 URL: https://github.com/girke-lab/ChemmineR
 VignetteBuilder: knitr
