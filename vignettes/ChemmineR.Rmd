@@ -900,7 +900,7 @@ when searching with them. Finally, the new compound ids are returned and
 stored in the "ids" variable.
 
 
-```{r eval=FALSE, tidy=FALSE}
+```{r eval=TRUE, tidy=FALSE}
  data(sdfsample)
 
  #create and initialize a new SQLite database 
@@ -910,7 +910,7 @@ stored in the "ids" variable.
  # and counts for RINGS and AROMATIC, as computed by rings, which 
  # returns a data frame itself. 
  ids<-loadSdf(conn,sdfsample, function(sdfset) 
-					 data.frame(rings(sdfset,type="count",upper=6, arom=TRUE),propOB(sdfset)) ) 
+					 data.frame(rings(sdfset,type="count",upper=6, arom=TRUE)) ) 
 
  #list features in the database:
  print(listFeatures(conn))
