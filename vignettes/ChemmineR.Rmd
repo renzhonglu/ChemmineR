@@ -997,19 +997,18 @@ ids, the actual compounds can be fetched with
 also be fetched by name using the `findCompoundsByName`
 function.
 
-In this example we search for compounds with molecular weight less than
-300.
+In this example we search for compounds with 0 or 1 rings:
 
 
 ```{r }
-results = findCompounds(conn,"mw",c("mw < 300"))
+results = findCompounds(conn,"rings",c("rings <= 1"))
 message("found ",length(results))
 ```
 
 If more than one test is given, only compounds which satisfy all tests are found. So if we wanted
 to further restrict our search to compounds with 2 or more aromatic rings we could do:
 ```{r }
-results = findCompounds(conn,c("mw","aromatic"),c("mw < 300","aromatic >= 2"))
+results = findCompounds(conn,c("rings","aromatic"),c("rings<=2","aromatic >= 2"))
 message("found ",length(results))
 ```
 
@@ -1017,7 +1016,7 @@ Remember that any feature used in some test must be listed in the second argumen
 
 String patterns can also be used. So if we wanted to match a substring of the molecular formula, say
 to find compounds with 21 carbon atoms, we could do:
-```{r }
+```{r eval=FALSE}
 results = findCompounds(conn,"formula",c("formula like '%C21%'"))
 message("found ",length(results))
 ```
@@ -1067,14 +1066,14 @@ compounds = getCompounds(conn,results,filename=file.path(tempdir(),"results.sdf"
 Using the `getCompoundFeatures` function, you can get a set of feature values 
 as a data frame:
 ```{r}
-getCompoundFeatures(conn,results[1:5],c("mw","logp","formula"))
+getCompoundFeatures(conn,results[1:5],c("rings","aromatic"))
 
 #write results directly to a CSV file (reduces memory usage):
-getCompoundFeatures(conn,results[1:5],c("mw","logp","formula"),filename="features.csv")
+getCompoundFeatures(conn,results[1:5],c("rings","aromatic"),filename="features.csv")
 
 #maintain input order in output:
 print(results[1:5])
-getCompoundFeatures(conn,results[1:5],c("mw","logp","formula"),keepOrder=TRUE)
+getCompoundFeatures(conn,results[1:5],c("rings","aromatic"),keepOrder=TRUE)
 ```
 
 <div align="right">[Back to Table of Contents]()</div>
