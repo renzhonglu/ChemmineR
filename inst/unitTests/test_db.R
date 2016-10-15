@@ -1,5 +1,4 @@
 
-options(warn=2)
 testDir = system.file("unitTests",package="ChemmineR")
 test_aaa.clean <- function(){
 
