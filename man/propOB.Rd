@@ -4,8 +4,9 @@
 	Properties from OpenBabel
 }
 \description{
-	Generates the following descriptors in the given order:
-	'abonds', 'atoms', 'bonds', 'dbonds', 'HBA1', 'HBA2', 'HBD', 'logP', 'MR', 'MW', 'nF', 'sbonds', 'tbonds', 'TPSA'.
+	 Generates the following descriptors: 
+	 "cansmi", "cansmiNS", "formula", "HBA1", "HBA2", "HBD", "InChI", 
+	 "InChIKey", "logP", "MR", "MW", "nF","title", "TPSA".
 }
 \usage{
 propOB(sdfSet)
