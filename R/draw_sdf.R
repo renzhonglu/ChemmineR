@@ -1,7 +1,4 @@
 
-library(ggplot2)
-library(grid)
-library(gridExtra)
 
 default_node_policy = function() {
 	return(c(	'N'='blue',
@@ -42,7 +39,6 @@ concatenate_plots = function(sdf_list, filename=NULL, ...) {
 
 handle_raster = function(plot_target, raster) {
 	require(png)
-	require(grid)
 
 	# check if it's a filename
 	if (typeof(raster) == 'character') {
