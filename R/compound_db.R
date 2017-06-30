@@ -5,6 +5,7 @@ debug = FALSE
 dbOp<-function(dbExpr){
 	#print(as.character(substitute(dbExpr)))
 	#print(system.time(dbExpr))
+	#print(dbExpr)
 	dbExpr
 }
 
@@ -38,7 +39,7 @@ initDb <- function(handle){
 							  collapse=""),";",fixed=TRUE))
 		#print(statements)
 
-		Map(function(sql) dbOp(dbGetQuery(conn,sql)),statements)
+		Map(function(sql) dbOp(dbExecute(conn,sql)),statements)
 	}
 	conn
 }
@@ -54,7 +55,7 @@ dbTransaction <- function(conn,expr){
 		# be paranoid about setting this as bad things will happen if its not set
 		enableForeignKeys(conn)
 
-		dbGetQuery(conn,"BEGIN TRANSACTION")
+		dbExecute(conn,"BEGIN TRANSACTION")
 		ret=expr
 		dbCommit(conn)
 		ret
@@ -64,8 +65,11 @@ dbTransaction <- function(conn,expr){
 		stop(paste("db error inside transaction: ",e$message))
 	})
 }
-dbGetQueryChecked <- function(conn,statement,...){
-	ret=dbGetQuery(conn,statement)
+dbGetQueryChecked <- function(conn,statement,execute=FALSE,...){
+	if(execute)
+		ret=dbExecute(conn,statement)
+	else
+		ret=dbGetQuery(conn,statement)
 	err=dbGetException(conn)
 	if(err$errorMsg[1] != "OK")
 		stop("error in dbGetQuery: ",err$errorMsg,"  ",traceback())
@@ -895,10 +899,10 @@ createFeature <- function(conn,name, isNumeric){
 	dbGetQueryChecked(conn,
 		paste("CREATE TABLE feature_",name," (
 			compound_id INTEGER PRIMARY KEY REFERENCES compounds(compound_id) ON DELETE CASCADE ON UPDATE CASCADE, ",
-			"",name," ",sqlType," )",sep=""))
+			"",name," ",sqlType," )",sep=""),execute=TRUE)
 
 	#print("made table")
-	dbGetQuery(conn,paste("CREATE INDEX feature_",name,"_index ON
+	dbExecute(conn,paste("CREATE INDEX feature_",name,"_index ON
 								 feature_",name,"(\"",name,"\")",sep=""))
 	#print("made index")
 
@@ -913,7 +917,7 @@ insertDef <- function(conn,data)  {
 								 "VALUES(:definition,:definition_checksum,:format)",sep=""), bind.data=data[fields])
 	}else if(inherits(conn,"PostgreSQLConnection")){
 		if(debug) print(data[,"definition_checksum"])
-		apply(data[,fields],1,function(row) dbOp(dbGetQuery(conn, 
+		apply(data[,fields],1,function(row) dbOp(dbExecute(conn, 
 						 "INSERT INTO compounds(definition,definition_checksum,format) VALUES($1,$2,$3)",
 						 row)))
 	}else{
@@ -990,7 +994,7 @@ insertDescriptor <- function(conn,data){
 			})
 		apply(data[,fields2],1,function(row) {
 			row[2] = descTypes[row[2]] #translate descriptor_type to descriptor_type_id
-			dbTransaction(conn,dbGetQuery(conn, paste("INSERT INTO compound_descriptors(compound_id,
+			dbTransaction(conn,dbExecute(conn, paste("INSERT INTO compound_descriptors(compound_id,
 										  descriptor_id) ",
 					"VALUES( (SELECT compound_id FROM compounds WHERE definition_checksum = $1),
 								(SELECT descriptor_id FROM descriptors  
@@ -1006,7 +1010,7 @@ insertDescriptorType <- function(conn,data){
 								 bind.data=data)
 	}else if(inherits(conn,"PostgreSQLConnection")){
 		apply(data,1,function(row) 
-				dbGetQuery(conn,paste("INSERT INTO descriptor_types(descriptor_type) VALUES($1)"),row))
+				dbExecute(conn,paste("INSERT INTO descriptor_types(descriptor_type) VALUES($1)"),row))
 	}else{
 		stop("database ",class(conn)," unsupported")
 	}
@@ -1019,7 +1023,7 @@ updatePriorities <- function(conn,data){
 								 descriptor_id=:descriptor_id", bind.data=data)
 	}else if(inherits(conn,"PostgreSQLConnection")){
 		apply(data[,c("compound_id","descriptor_id","priority")],1,function(row) 
-				dbGetQuery(conn,paste("UPDATE compound_descriptors SET priority = $3 WHERE compound_id=$1 AND
+				dbExecute(conn,paste("UPDATE compound_descriptors SET priority = $3 WHERE compound_id=$1 AND
 								 descriptor_id=$2"),row))
 	}else{
 		stop("database ",class(conn)," unsupported")
@@ -1036,13 +1040,15 @@ getPreparedQuery <- function(conn,statement,bind.data){
 	#dbSendPreparedQuery(conn,statement,bind.data)
 	
 	#print("sending query")
-	res <- dbSendQuery(conn,statement)
+	res <- dbSendStatement(conn,statement)
 	#print("after sendQuery")
 	on.exit(dbClearResult(res)) #clear result set when this function exits
 	#print("after exit callback registered")
-	dbBind(res,bind.data)
+
+	#suppress warnings here otherwise it complains about 
+	#converting factors to strings occasionally
+	suppressWarnings( dbBind(res,bind.data))
 	#print("after dbBind")
-	dbFetch(res)
 }
 
 
