@@ -1876,7 +1876,6 @@ MF <- function(x, ...) {
 	return(sapply(names(rings), function(x) .arom(con, b, r=rings[[x]])))
 }
 
-<<<<<<< HEAD
 ## Inner rings inherit aromaticity assignment from super rings if they are fully contained in them
 ## This is necessary since the aromaticity assignment for inner rings may miss context information required
 ## for Hueckel's rule. Note, for this to work the input data has to be generated with .rings(x, Inf)
