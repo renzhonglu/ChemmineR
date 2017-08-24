@@ -67,10 +67,14 @@ dbTransaction <- function(conn,expr){
 }
 dbGetQueryChecked <- function(conn,statement,execute=FALSE,...){
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if(execute)
 =======
 	if(execute == TRUE)
 >>>>>>> upstream/RELEASE_3_5
+=======
+	if(execute == TRUE)
+>>>>>>> origin/RELEASE_3_5
 		ret=dbExecute(conn,statement)
 	else
 		ret=dbGetQuery(conn,statement)
@@ -1049,6 +1053,7 @@ getPreparedQuery <- function(conn,statement,bind.data){
 	on.exit(dbClearResult(res)) #clear result set when this function exits
 	#print("after exit callback registered")
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	#suppress warnings here otherwise it complains about 
 	#converting factors to strings occasionally
@@ -1056,6 +1061,9 @@ getPreparedQuery <- function(conn,statement,bind.data){
 =======
 	suppressWarnings(dbBind(res,bind.data))
 >>>>>>> upstream/RELEASE_3_5
+=======
+	suppressWarnings(dbBind(res,bind.data))
+>>>>>>> origin/RELEASE_3_5
 	#print("after dbBind")
 }
 
