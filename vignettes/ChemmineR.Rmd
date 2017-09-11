@@ -154,7 +154,7 @@ Create Instances of `SDFset` class:
 An `SDFset` is created during the import of an SD file:
 
 ```{r eval=FALSE, tidy=FALSE}
- sdfset <- read.SDFset("http://faculty.ucr.edu/ tgirke/Documents/R_BioCond/Samples/sdfsample.sdf") 
+ sdfset <- read.SDFset("http://faculty.ucr.edu/~tgirke/Documents/R_BioCond/Samples/sdfsample.sdf") 
 ```
 
 
@@ -498,7 +498,7 @@ Compound\_00650001\_00675000.sdf.gz
 SDFs can be imported with the `read.SDFset` function:
 
 ```{r eval=FALSE, tidy=FALSE}
- sdfset <- read.SDFset("http://faculty.ucr.edu/ tgirke/Documents/R_BioCond/Samples/sdfsample.sdf") 
+ sdfset <- read.SDFset("http://faculty.ucr.edu/~tgirke/Documents/R_BioCond/Samples/sdfsample.sdf") 
 ```
 
 ```{r eval=TRUE, tidy=FALSE}
@@ -511,7 +511,7 @@ SDFs can be imported with the `read.SDFset` function:
 
 Import SD file into `SDFstr` container: 
 ```{r eval=FALSE, tidy=FALSE}
- sdfstr <- read.SDFstr("http://faculty.ucr.edu/ tgirke/Documents/R_BioCond/Samples/sdfsample.sdf") 
+ sdfstr <- read.SDFstr("http://faculty.ucr.edu/~tgirke/Documents/R_BioCond/Samples/sdfsample.sdf") 
 ```
 Create
 `SDFset` from `SDFstr` class:
