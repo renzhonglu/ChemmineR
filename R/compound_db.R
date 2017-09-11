@@ -1044,18 +1044,9 @@ getPreparedQuery <- function(conn,statement,bind.data){
 	#print("after sendQuery")
 	on.exit(dbClearResult(res)) #clear result set when this function exits
 	#print("after exit callback registered")
-<<<<<<< HEAD
-<<<<<<< HEAD
-
 	#suppress warnings here otherwise it complains about 
 	#converting factors to strings occasionally
-	suppressWarnings( dbBind(res,bind.data))
-=======
 	suppressWarnings(dbBind(res,bind.data))
->>>>>>> upstream/RELEASE_3_5
-=======
-	suppressWarnings(dbBind(res,bind.data))
->>>>>>> origin/RELEASE_3_5
 	#print("after dbBind")
 }
 
