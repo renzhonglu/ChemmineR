@@ -813,6 +813,25 @@ fpSim <- function(x, y, sorted=TRUE, method="Tanimoto",
 	
 
 }
+
+
+sdf2png <- function(sdf,filename){
+    if(! class(sdf) == "SDFset"){
+        stop('reference compound must be a compound of class \"SDFset\"')
+    } 
+
+	 if(.haveOB()){
+		 defs = sdfSet2definition(sdf)
+	    convertToImage("SDF","PNG",defs,filename)
+		# t=Reduce(rbind,strsplit(unlist(strsplit(,
+		#													  "\n",fixed=TRUE)),
+		#			 "\t",fixed=TRUE))
+	 }else{
+		 message("ChemmineOB not found.")
+	 }
+
+}
+
 ######################################
 ## Query ChemMine Web Tools Service ##
 ######################################
