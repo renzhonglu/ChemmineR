@@ -815,20 +815,29 @@ fpSim <- function(x, y, sorted=TRUE, method="Tanimoto",
 }
 
 
-sdf2png <- function(sdf,filename){
+sdf2image <- function(sdf,filename,format="PNG",
+							 height=300,
+							 noHbonds=TRUE,
+							 regenCoords=FALSE){
+	 .ensureOB()
+
     if(! class(sdf) == "SDFset"){
         stop('reference compound must be a compound of class \"SDFset\"')
     } 
 
-	 if(.haveOB()){
-		 defs = sdfSet2definition(sdf)
-	    convertToImage("SDF","PNG",defs,filename)
-		# t=Reduce(rbind,strsplit(unlist(strsplit(,
-		#													  "\n",fixed=TRUE)),
-		#			 "\t",fixed=TRUE))
-	 }else{
-		 message("ChemmineOB not found.")
-	 }
+	 genOps = data.frame(names=character(0),args=character(0))
+	 outOps = data.frame(names=character(0),args=character(0))
+
+	 if(height != 300) #differs from default
+		 outOps = rbind(outOps,data.frame(names="p",args=as.character(height)))
+	 if(noHbonds)
+		 genOps = rbind(genOps,data.frame(names="d",args=""))
+	 if(regenCoords)
+		 genOps = rbind(genOps,data.frame(names="gen2D",args=""))
+
+	 defs = sdfSet2definition(sdf)
+	 convertToImage("SDF",format,defs,filename,
+						 options = genOps, out_options = outOps)
 
 }
 
