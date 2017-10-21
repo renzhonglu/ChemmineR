@@ -48,12 +48,13 @@
 	data(sdfsample)
 	(sdfset <- sdfsample)
 
+\dontrun{ 
 	## Plot single compound structure
 	openBabelPlot(sdfset[1])
 
 	## Plot several compounds structures
 	openBabelPlot(sdfset[1:4])
-
+}
 }
 
 \keyword{ aplot  }
